@@ -26,6 +26,7 @@ TRNS='data_prepared/rsessions_transformed.json'
 NDXCFG=rsessions-index-config.yaml
 
 INPUT=$1 # || rsessions.json
+LOG=./$$.log
 
 if [[ ! -f $INPUT ]]; then echo "No input file $INPUT"; exit 1; fi
 if [[ ! -f $NDXCFG ]]; then echo "No index config found $NDXCFG"; exit 1; fi
@@ -41,12 +42,29 @@ function rsessions_transform() {
 		"devicename": .device.name, "deviceos": .device.os.name, "deviceosver": .device.os.version }' > $TRNS
 }
 
+function delete_old_index() {
+	$CRL -XDELETE "$V1/indexes/rsessions" > $LOG 2>&1
+}
+
 function create_index_quickwit() {
-	$CRL -XPOST "$V1/indexes" --header "content-type: application/yaml" --data-binary @$NDXCFG &&
-	$CRL -XPOST "$V1/rsessions/ingest?commit=force" --data-binary @$TRNS
+	$CRL -XPOST "$V1/indexes" --header "content-type: application/yaml" --data-binary @$NDXCFG > $LOG 2>&1 &&
+	$CRL -XPOST "$V1/rsessions/ingest?commit=force" --data-binary @$TRNS >> $LOG 2>&1
+}
+
+function search_query() {
+	echo -n "Hits number: "
+	$CRL -XGET "$V1/rsessions/search?query=desktop-app" | $JQ '.num_hits'
 }
 
 echo -n Transform mongo collection dump... 
 rsessions_transform && echo Done
-echo Create index... 
-create_index_quickwit
+
+## Optional
+echo -n Deleting index if exist... 
+delete_old_index && echo Done
+
+echo -n Create index... 
+create_index_quickwit && echo Done
+
+## Test query
+search_query
