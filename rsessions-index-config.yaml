@@ -1,0 +1,72 @@
+#
+# Index config file for stackoverflow dataset.
+#
+version: 0.8
+
+index_id: rsessions
+
+doc_mapping:
+  field_mappings:
+    - name: year
+      type: i64
+      indexed: true
+      fast: true
+      stored: true
+    - name: month
+      type: i64
+      indexed: true
+      fast: true
+      stored: true
+    - name: day
+      type: i64
+      indexed: true
+      fast: true
+      stored: true
+    - name: deviceosver
+      type: text
+      tokenizer: default
+      record: position
+      indexed: true
+      fast: true
+      stored: true
+    - name: deviceos
+      type: text
+      tokenizer: default
+      record: position
+      indexed: true
+      fast: true
+      stored: true
+    - name: devicename
+      type: text
+      tokenizer: default
+      record: position
+      indexed: true
+      fast: true
+      stored: true
+    - name: devicetype
+      type: text
+      tokenizer: default
+      record: position
+      indexed: true
+      fast: true
+      stored: true
+    - name: role
+      type: text
+      tokenizer: default
+      record: position
+      indexed: true
+      fast: true
+      stored: true
+    - name: userid
+      type: text
+      tokenizer: default
+      record: position
+      indexed: true
+      fast: true
+      stored: true
+
+search_settings:
+  default_search_fields: [devicetype, devicename, deviceos, role]
+
+indexing_settings:
+  commit_timeout_secs: 10

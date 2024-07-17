@@ -27,14 +27,6 @@
   ],
   "schema": [
     {
-      "name": "id",
-      "type": "text",
-      "options": {
-        "stored": true,
-        "fast": true
-      }
-    },
-    {
       "name": "day",
       "type": "i64",
       "options": {
