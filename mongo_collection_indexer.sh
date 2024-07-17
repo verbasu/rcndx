@@ -6,13 +6,13 @@ TNV=tantivy
 # JSON transformer, jq analog (cargo install --locked jaq)
 JQ=jaq
 
-TRNS=transformed.json
+TRNS='data_prepared/rsessions_transformed.json'
 
 INPUT=$1 # || rsessions.json
 
 if [[ ! `which $TNV` || ! `which $JQ` ]]; then echo "No tools found"; exit 1; fi
 if [[ ! -f $INPUT ]]; then echo "No input file $INPUT"; exit 1; fi
-if [[ ! touch $TRNS ]]; then echo "Can't create file"; exit 1; fi
+touch $TRNS || ( echo "Can't create file"; exit 1 )
 
 function rsessions_transform() {
 	# -c switch at jq is needed to create valid JSON 

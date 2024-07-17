@@ -1,2 +1,5 @@
+data_prepared/*
+!data_prepared/.donotdelete
 rsessions_index/*
 !rsessions_index/meta.json
+!rsessions_index/.donotdelete
