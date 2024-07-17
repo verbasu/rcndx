@@ -12,7 +12,7 @@ INPUT=$1 # || rsessions.json
 
 if [[ ! `which $TNV` || ! `which $JQ` ]]; then echo "No tools found"; exit 1; fi
 if [[ ! -f $INPUT ]]; then echo "No input file $INPUT"; exit 1; fi
-touch $TRNS || ( echo "Can't create file"; exit 1 )
+touch $TRNS || exit 1
 
 function rsessions_transform() {
 	# -c switch at jq is needed to create valid JSON 
@@ -24,4 +24,5 @@ function rsessions_transform() {
 		"devicename": .device.name, "deviceos": .device.os.name, "deviceosver": .device.os.version }' > $TRNS
 }
 
+echo Transform mongo collection dump
 rsessions_transform
