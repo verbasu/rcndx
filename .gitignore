@@ -3,3 +3,4 @@ data_prepared/*
 rsessions_index/*
 !rsessions_index/meta.json
 !rsessions_index/.donotdelete
+*.log
