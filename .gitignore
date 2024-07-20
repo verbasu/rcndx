@@ -4,3 +4,4 @@ rsessions_index/*
 !rsessions_index/meta.json
 !rsessions_index/.donotdelete
 *.log
+osingest/target
