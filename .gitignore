@@ -5,3 +5,4 @@ rsessions_index/*
 !rsessions_index/.donotdelete
 *.log
 osingest/target
+qwingest/target
