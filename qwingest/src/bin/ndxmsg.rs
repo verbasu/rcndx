@@ -12,15 +12,15 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 struct User {
-    username: String,
-    name: String,
+    username: Option<String>,
+    name: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Files {
-    name: String,
+    name: Option<String>,
     #[serde(rename = "type")]
-    _type: String,
+    _type: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -49,7 +49,7 @@ impl MsgManager {
     }
 
     fn get_messages(&self, numbr: i64, fpath: &str) {
-        let filter = doc! { "u.username": { "$not": {"$regex": "^zabbix.*"} }, "attachments": { "$exists": true } };
+        let filter = doc! { "u.username": { "$not": {"$regex": "^zabbix.*"} }, "msg": { "$exists": true } };
         let find_options = FindOptions::builder().limit(numbr).build();
         let cursors = self
             .msgcol

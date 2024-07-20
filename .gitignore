@@ -4,5 +4,7 @@ rsessions_index/*
 !rsessions_index/meta.json
 !rsessions_index/.donotdelete
 *.log
+*.json
 osingest/target
 qwingest/target
+.env
